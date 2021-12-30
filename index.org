@@ -11,6 +11,7 @@ The data we'll use is
 #+begin_src python :session data_desc
 import pandas as pd
 import seaborn as sns
+import matplotlib.pyplot as plt
 data = pd.read_csv("./data_all_strikes.csv")
 data.columns
 #+end_src
@@ -45,6 +46,27 @@ data
 
 [162519 rows x 5 columns]
 #+end_example
+
+#+begin_src python :session data_desc
+call_plot = sns.pairplot(data[data["typeInd_ezOct"] == "call"])
+call_plot.savefig('call_plot.png')
+#+end_src
+
+#+RESULTS:
+: None
+
+[[./call_plot.png]]
+
+#+begin_src python :session data_desc
+put_plot = sns.pairplot(data[data["typeInd_ezOct"] == "put"])
+put_plot.savefig('put_plot.png')
+#+end_src
+
+#+RESULTS:
+: None
+
+[[./put_plot.png]]
+
 
 * Keras/Tensorflow
 
