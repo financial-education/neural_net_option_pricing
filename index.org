@@ -1,0 +1,53 @@
+#+title: Deep Neural Nets for Option Pricing
+
+
+
+See this paper for an early analysis which used neural nets to learn the Black-Scholes model.
+
+* Data
+
+The data we'll use is
+
+#+begin_src python :session data_desc
+import pandas as pd
+import seaborn as sns
+data = pd.read_csv("./data_all_strikes.csv")
+data.columns
+#+end_src
+
+#+RESULTS:
+: Index(['tradeDate', 'tradeTime', 'strikePrice_ezOct', 'typeInd_ezOct',
+:        'deliveryDate_ezOct', 'avgTradePrice_ezOct', 'deliveryDate_esOct',
+:        'avgTradePrice_esOct', 'timeTillExp', 'IV', 'BS', 'Delta', 'Gamma',
+:        'Vega', 'Theta', 'Rho', 'moneyness'],
+:       dtype='object')
+
+
+#+begin_src python :session data_desc
+data.drop(columns=["tradeDate", "tradeTime", "strikePrice_ezOct", "avgTradePrice_esOct", "deliveryDate_ezOct", "deliveryDate_esOct", "BS", "Delta", "Gamma", "Vega", "Theta", "Rho"], axis=1, inplace=True)
+data
+#+end_src
+
+#+RESULTS:
+#+begin_example
+       typeInd_ezOct  avgTradePrice_ezOct  timeTillExp        IV  moneyness
+0               call                38.50     0.082191  0.155232   1.005091
+1                put                29.50     0.213698  0.243308   1.084507
+2                put                 1.05     0.136983  0.465029   1.480567
+3               call                12.25     0.136981  0.160561   0.950741
+4                put                 1.75     0.136977  0.374290   1.327241
+...              ...                  ...          ...       ...        ...
+162514           put                24.50     0.131532  0.152491   1.026103
+162515           put                 8.00     0.054797  0.166309   1.036731
+162516           put                12.75     0.054797  0.150942   1.021559
+162517          call                12.00     0.054797  0.116226   0.987829
+162518          call                10.00     0.054797  0.113274   0.985504
+
+[162519 rows x 5 columns]
+#+end_example
+
+* Keras/Tensorflow
+
+
+
+* Pytorch
