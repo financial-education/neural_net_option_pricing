@@ -3,10 +3,11 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-12-30 Thu 09:36 -->
+<!-- 2021-12-30 Thu 19:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Deep Neural Nets for Option Pricing</title>
+<meta name="author" content="Matt Brigida, Ph.D." />
 <meta name="generator" content="Org Mode" />
 <style>
   #content { max-width: 60em; margin: auto; }
@@ -192,6 +193,12 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
 </style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
 </head>
 <body>
 <div id="content" class="content">
@@ -200,9 +207,9 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org241413c">1. Data</a></li>
-<li><a href="#org5176371">2. Keras/Tensorflow</a></li>
-<li><a href="#org0f8db94">3. Pytorch</a></li>
+<li><a href="#orgc3580bc">1. Data</a></li>
+<li><a href="#org9a27428">2. Keras/Tensorflow</a></li>
+<li><a href="#orgc725fed">3. Pytorch</a></li>
 </ul>
 </div>
 </div>
@@ -210,8 +217,8 @@
 See this paper for an early analysis which used neural nets to learn the Black-Scholes model.
 </p>
 
-<div id="outline-container-org241413c" class="outline-2">
-<h2 id="org241413c"><span class="section-number-2">1.</span> Data</h2>
+<div id="outline-container-orgc3580bc" class="outline-2">
+<h2 id="orgc3580bc"><span class="section-number-2">1.</span> Data</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The data we'll use is
@@ -228,31 +235,32 @@ data.columns
 
 
 <div class="org-src-container">
-<pre class="src src-python">data.drop(columns=["tradeDate", "tradeTime", "strikePrice_ezOct", "avgTradePrice_esOct", "deliveryDate_ezOct", "deliveryDate_esOct", "BS", "Delta", "Gamma", "Vega", "Theta", "Rho"], axis=1, inplace=True)
+<pre class="src src-python">data.drop(columns=["tradeDate", "tradeTime", "deliveryDate_ezOct", "deliveryDate_esOct", "BS", "Delta", "Gamma", "Vega", "Theta", "Rho"], axis=1, inplace=True)
 data
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-python">call_plot = sns.pairplot(data[data["typeInd_ezOct"] == "call"])
+<pre class="src src-python">sns.color_palette("viridis", as_cmap=True)
+call_plot = sns.pairplot(data[data["typeInd_ezOct"] == "call"][["avgTradePrice_ezOct", "timeTillExp", "IV", "moneyness", "strikePrice_ezOct"]], hue="strikePrice_ezOct")
 call_plot.savefig('call_plot.png')
 </pre>
 </div>
 
 
-<div id="org06ca4e3" class="figure">
+<div id="org41c612e" class="figure">
 <p><img src="./call_plot.png" alt="call_plot.png" />
 </p>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-python">put_plot = sns.pairplot(data[data["typeInd_ezOct"] == "put"])
+<pre class="src src-python">put_plot = sns.pairplot(data[data["typeInd_ezOct"] == "put"][["avgTradePrice_ezOct", "timeTillExp", "IV", "moneyness", "strikePrice_ezOct"]], hue="strikePrice_ezOct")
 put_plot.savefig('put_plot.png')
 </pre>
 </div>
 
 
-<div id="org89fc70a" class="figure">
+<div id="org8be9d74" class="figure">
 <p><img src="./put_plot.png" alt="put_plot.png" />
 </p>
 </div>
@@ -260,18 +268,19 @@ put_plot.savefig('put_plot.png')
 </div>
 
 
-<div id="outline-container-org5176371" class="outline-2">
-<h2 id="org5176371"><span class="section-number-2">2.</span> Keras/Tensorflow</h2>
+<div id="outline-container-org9a27428" class="outline-2">
+<h2 id="org9a27428"><span class="section-number-2">2.</span> Keras/Tensorflow</h2>
 </div>
 
 
 
-<div id="outline-container-org0f8db94" class="outline-2">
-<h2 id="org0f8db94"><span class="section-number-2">3.</span> Pytorch</h2>
+<div id="outline-container-orgc725fed" class="outline-2">
+<h2 id="orgc725fed"><span class="section-number-2">3.</span> Pytorch</h2>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2021-12-30 Thu 09:36</p>
+<p class="author">Author: Matt Brigida, Ph.D.</p>
+<p class="date">Created: 2021-12-30 Thu 19:05</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

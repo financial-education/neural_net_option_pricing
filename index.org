@@ -1,4 +1,10 @@
 #+title: Deep Neural Nets for Option Pricing
+#+author: Matt Brigida, Ph.D.
+#+email: matthew.brigida@sunypoly.edu
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+# #+PROPERTY: header-args :eval no
+
 
 
 
@@ -25,30 +31,31 @@ data.columns
 
 
 #+begin_src python :session data_desc
-data.drop(columns=["tradeDate", "tradeTime", "strikePrice_ezOct", "avgTradePrice_esOct", "deliveryDate_ezOct", "deliveryDate_esOct", "BS", "Delta", "Gamma", "Vega", "Theta", "Rho"], axis=1, inplace=True)
+data.drop(columns=["tradeDate", "tradeTime", "deliveryDate_ezOct", "deliveryDate_esOct", "BS", "Delta", "Gamma", "Vega", "Theta", "Rho"], axis=1, inplace=True)
 data
 #+end_src
 
 #+RESULTS:
 #+begin_example
-       typeInd_ezOct  avgTradePrice_ezOct  timeTillExp        IV  moneyness
-0               call                38.50     0.082191  0.155232   1.005091
-1                put                29.50     0.213698  0.243308   1.084507
-2                put                 1.05     0.136983  0.465029   1.480567
-3               call                12.25     0.136981  0.160561   0.950741
-4                put                 1.75     0.136977  0.374290   1.327241
-...              ...                  ...          ...       ...        ...
-162514           put                24.50     0.131532  0.152491   1.026103
-162515           put                 8.00     0.054797  0.166309   1.036731
-162516           put                12.75     0.054797  0.150942   1.021559
-162517          call                12.00     0.054797  0.116226   0.987829
-162518          call                10.00     0.054797  0.113274   0.985504
+        strikePrice_ezOct typeInd_ezOct  avgTradePrice_ezOct  avgTradePrice_esOct  timeTillExp        IV  moneyness
+0                    1915          call                38.50          1924.750000     0.082191  0.155232   1.005091
+1                    1775           put                29.50          1925.000000     0.213698  0.243308   1.084507
+2                    1300           put                 1.05          1924.737500     0.136983  0.465029   1.480567
+3                    2025          call                12.25          1925.250000     0.136981  0.160561   0.950741
+4                    1450           put                 1.75          1924.500000     0.136977  0.374290   1.327241
+...                   ...           ...                  ...                  ...          ...       ...        ...
+162514               2040           put                24.50          2093.250000     0.131532  0.152491   1.026103
+162515               2020           put                 8.00          2094.196918     0.054797  0.166309   1.036731
+162516               2050           put                12.75          2094.196918     0.054797  0.150942   1.021559
+162517               2120          call                12.00          2094.196918     0.054797  0.116226   0.987829
+162518               2125          call                10.00          2094.196918     0.054797  0.113274   0.985504
 
-[162519 rows x 5 columns]
+[162519 rows x 7 columns]
 #+end_example
 
 #+begin_src python :session data_desc
-call_plot = sns.pairplot(data[data["typeInd_ezOct"] == "call"])
+sns.color_palette("viridis", as_cmap=True)
+call_plot = sns.pairplot(data[data["typeInd_ezOct"] == "call"][["avgTradePrice_ezOct", "timeTillExp", "IV", "moneyness", "strikePrice_ezOct"]], hue="strikePrice_ezOct")
 call_plot.savefig('call_plot.png')
 #+end_src
 
@@ -58,7 +65,7 @@ call_plot.savefig('call_plot.png')
 [[./call_plot.png]]
 
 #+begin_src python :session data_desc
-put_plot = sns.pairplot(data[data["typeInd_ezOct"] == "put"])
+put_plot = sns.pairplot(data[data["typeInd_ezOct"] == "put"][["avgTradePrice_ezOct", "timeTillExp", "IV", "moneyness", "strikePrice_ezOct"]], hue="strikePrice_ezOct")
 put_plot.savefig('put_plot.png')
 #+end_src
 
