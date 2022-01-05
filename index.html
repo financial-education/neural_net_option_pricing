@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-12-30 Thu 19:05 -->
+<!-- 2022-01-04 Tue 19:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Deep Neural Nets for Option Pricing</title>
@@ -207,9 +207,9 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgc3580bc">1. Data</a></li>
-<li><a href="#org9a27428">2. Keras/Tensorflow</a></li>
-<li><a href="#orgc725fed">3. Pytorch</a></li>
+<li><a href="#org9b18f17">1. Data</a></li>
+<li><a href="#org7ea0c9b">2. Keras/Tensorflow</a></li>
+<li><a href="#org82813ea">3. Pytorch</a></li>
 </ul>
 </div>
 </div>
@@ -217,8 +217,8 @@
 See this paper for an early analysis which used neural nets to learn the Black-Scholes model.
 </p>
 
-<div id="outline-container-orgc3580bc" class="outline-2">
-<h2 id="orgc3580bc"><span class="section-number-2">1.</span> Data</h2>
+<div id="outline-container-org9b18f17" class="outline-2">
+<h2 id="org9b18f17"><span class="section-number-2">1.</span> Data</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The data we'll use is
@@ -233,12 +233,38 @@ data.columns
 </pre>
 </div>
 
+<pre class="example">
+Index(['tradeDate', 'tradeTime', 'strikePrice_ezOct', 'typeInd_ezOct',
+       'deliveryDate_ezOct', 'avgTradePrice_ezOct', 'deliveryDate_esOct',
+       'avgTradePrice_esOct', 'timeTillExp', 'IV', 'BS', 'Delta', 'Gamma',
+       'Vega', 'Theta', 'Rho', 'moneyness'],
+      dtype='object')
+</pre>
+
+
 
 <div class="org-src-container">
 <pre class="src src-python">data.drop(columns=["tradeDate", "tradeTime", "deliveryDate_ezOct", "deliveryDate_esOct", "BS", "Delta", "Gamma", "Vega", "Theta", "Rho"], axis=1, inplace=True)
 data
 </pre>
 </div>
+
+<pre class="example" id="org2a1ca42">
+        strikePrice_ezOct typeInd_ezOct  avgTradePrice_ezOct  avgTradePrice_esOct  timeTillExp        IV  moneyness
+0                    1915          call                38.50          1924.750000     0.082191  0.155232   1.005091
+1                    1775           put                29.50          1925.000000     0.213698  0.243308   1.084507
+2                    1300           put                 1.05          1924.737500     0.136983  0.465029   1.480567
+3                    2025          call                12.25          1925.250000     0.136981  0.160561   0.950741
+4                    1450           put                 1.75          1924.500000     0.136977  0.374290   1.327241
+...                   ...           ...                  ...                  ...          ...       ...        ...
+162514               2040           put                24.50          2093.250000     0.131532  0.152491   1.026103
+162515               2020           put                 8.00          2094.196918     0.054797  0.166309   1.036731
+162516               2050           put                12.75          2094.196918     0.054797  0.150942   1.021559
+162517               2120          call                12.00          2094.196918     0.054797  0.116226   0.987829
+162518               2125          call                10.00          2094.196918     0.054797  0.113274   0.985504
+
+[162519 rows x 7 columns]
+</pre>
 
 <div class="org-src-container">
 <pre class="src src-python">sns.color_palette("viridis", as_cmap=True)
@@ -248,7 +274,7 @@ call_plot.savefig('call_plot.png')
 </div>
 
 
-<div id="org41c612e" class="figure">
+<div id="orgda86185" class="figure">
 <p><img src="./call_plot.png" alt="call_plot.png" />
 </p>
 </div>
@@ -260,7 +286,7 @@ put_plot.savefig('put_plot.png')
 </div>
 
 
-<div id="org8be9d74" class="figure">
+<div id="orgf8d6766" class="figure">
 <p><img src="./put_plot.png" alt="put_plot.png" />
 </p>
 </div>
@@ -268,19 +294,28 @@ put_plot.savefig('put_plot.png')
 </div>
 
 
-<div id="outline-container-org9a27428" class="outline-2">
-<h2 id="org9a27428"><span class="section-number-2">2.</span> Keras/Tensorflow</h2>
+<div id="outline-container-org7ea0c9b" class="outline-2">
+<h2 id="org7ea0c9b"><span class="section-number-2">2.</span> Keras/Tensorflow</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Create a simple sequential model using Keras.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">
+</pre>
+</div>
+</div>
 </div>
 
 
-
-<div id="outline-container-orgc725fed" class="outline-2">
-<h2 id="orgc725fed"><span class="section-number-2">3.</span> Pytorch</h2>
+<div id="outline-container-org82813ea" class="outline-2">
+<h2 id="org82813ea"><span class="section-number-2">3.</span> Pytorch</h2>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Matt Brigida, Ph.D.</p>
-<p class="date">Created: 2021-12-30 Thu 19:05</p>
+<p class="date">Created: 2022-01-04 Tue 19:45</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
