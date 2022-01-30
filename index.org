@@ -74,14 +74,28 @@ put_plot.savefig('put_plot.png')
 
 [[./put_plot.png]]
 
+Split into calls and puts.
+
+#+begin_src python :session data_desc
+calls = data[data['typeInd_ezOct'] == 'call']
+calls.drop(columns=["typeInd_ezOct"], axis=1, inplace=True)
+puts = data[data['typeInd_ezOct'] == 'put']
+puts.drop(columns=["typeInd_ezOct"], axis=1, inplace=True)
+#+end_src
+
+#+RESULTS:
+: None
+
 
 * Keras/Tensorflow
 
 Create a simple sequential model using Keras.
 
 #+begin_src python :session data_desc
-
+target_calls = calls['avgTradePrice_ezOct']
+features_calls = calls[['avgTradePrice_esOct', 'timeTillExp', 'IV', 'moneyness']]
 #+end_src
 
+#+RESULTS:
 
 * Pytorch

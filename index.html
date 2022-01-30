@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-01-04 Tue 19:45 -->
+<!-- 2022-01-29 Sat 20:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Deep Neural Nets for Option Pricing</title>
@@ -207,9 +207,9 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org9b18f17">1. Data</a></li>
-<li><a href="#org7ea0c9b">2. Keras/Tensorflow</a></li>
-<li><a href="#org82813ea">3. Pytorch</a></li>
+<li><a href="#org9598133">1. Data</a></li>
+<li><a href="#orgc6e1a14">2. Keras/Tensorflow</a></li>
+<li><a href="#org29fd5d5">3. Pytorch</a></li>
 </ul>
 </div>
 </div>
@@ -217,8 +217,8 @@
 See this paper for an early analysis which used neural nets to learn the Black-Scholes model.
 </p>
 
-<div id="outline-container-org9b18f17" class="outline-2">
-<h2 id="org9b18f17"><span class="section-number-2">1.</span> Data</h2>
+<div id="outline-container-org9598133" class="outline-2">
+<h2 id="org9598133"><span class="section-number-2">1.</span> Data</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The data we'll use is
@@ -249,7 +249,7 @@ data
 </pre>
 </div>
 
-<pre class="example" id="org2a1ca42">
+<pre class="example" id="orgc697da7">
         strikePrice_ezOct typeInd_ezOct  avgTradePrice_ezOct  avgTradePrice_esOct  timeTillExp        IV  moneyness
 0                    1915          call                38.50          1924.750000     0.082191  0.155232   1.005091
 1                    1775           put                29.50          1925.000000     0.213698  0.243308   1.084507
@@ -274,7 +274,7 @@ call_plot.savefig('call_plot.png')
 </div>
 
 
-<div id="orgda86185" class="figure">
+<div id="orgb7d8815" class="figure">
 <p><img src="./call_plot.png" alt="call_plot.png" />
 </p>
 </div>
@@ -286,36 +286,48 @@ put_plot.savefig('put_plot.png')
 </div>
 
 
-<div id="orgf8d6766" class="figure">
+<div id="org1bde282" class="figure">
 <p><img src="./put_plot.png" alt="put_plot.png" />
 </p>
 </div>
-</div>
-</div>
 
-
-<div id="outline-container-org7ea0c9b" class="outline-2">
-<h2 id="org7ea0c9b"><span class="section-number-2">2.</span> Keras/Tensorflow</h2>
-<div class="outline-text-2" id="text-2">
 <p>
-Create a simple sequential model using Keras.
+Split into calls and puts.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">
+<pre class="src src-python">calls = data[data['typeInd_ezOct'] == 'call']
+calls.drop(columns=["typeInd_ezOct"], axis=1, inplace=True)
+puts = data[data['typeInd_ezOct'] == 'put']
+puts.drop(columns=["typeInd_ezOct"], axis=1, inplace=True)
 </pre>
 </div>
 </div>
 </div>
 
 
-<div id="outline-container-org82813ea" class="outline-2">
-<h2 id="org82813ea"><span class="section-number-2">3.</span> Pytorch</h2>
+<div id="outline-container-orgc6e1a14" class="outline-2">
+<h2 id="orgc6e1a14"><span class="section-number-2">2.</span> Keras/Tensorflow</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Create a simple sequential model using Keras.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">target_calls = calls['avgTradePrice_ezOct']
+features_calls = calls[['avgTradePrice_esOct', 'timeTillExp', 'IV', 'moneyness']]
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org29fd5d5" class="outline-2">
+<h2 id="org29fd5d5"><span class="section-number-2">3.</span> Pytorch</h2>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Matt Brigida, Ph.D.</p>
-<p class="date">Created: 2022-01-04 Tue 19:45</p>
+<p class="date">Created: 2022-01-29 Sat 20:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
