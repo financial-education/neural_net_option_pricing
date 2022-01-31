@@ -31,26 +31,27 @@ data.columns
 
 
 #+begin_src python :session data_desc :exports both
-data.drop(columns=["tradeDate", "tradeTime", "deliveryDate_ezOct", "deliveryDate_esOct", "BS", "Delta", "Gamma", "Vega", "Theta", "Rho"], axis=1, inplace=True)
+data.drop(columns=["tradeDate", "tradeTime", "deliveryDate_ezOct", "deliveryDate_esOct"], axis=1, inplace=True)
+## , "BS", "Delta", "Gamma", "Vega", "Theta", "Rho"
 data
 #+end_src
 
 #+RESULTS:
 #+begin_example
-        strikePrice_ezOct typeInd_ezOct  avgTradePrice_ezOct  avgTradePrice_esOct  timeTillExp        IV  moneyness
-0                    1915          call                38.50          1924.750000     0.082191  0.155232   1.005091
-1                    1775           put                29.50          1925.000000     0.213698  0.243308   1.084507
-2                    1300           put                 1.05          1924.737500     0.136983  0.465029   1.480567
-3                    2025          call                12.25          1925.250000     0.136981  0.160561   0.950741
-4                    1450           put                 1.75          1924.500000     0.136977  0.374290   1.327241
-...                   ...           ...                  ...                  ...          ...       ...        ...
-162514               2040           put                24.50          2093.250000     0.131532  0.152491   1.026103
-162515               2020           put                 8.00          2094.196918     0.054797  0.166309   1.036731
-162516               2050           put                12.75          2094.196918     0.054797  0.150942   1.021559
-162517               2120          call                12.00          2094.196918     0.054797  0.116226   0.987829
-162518               2125          call                10.00          2094.196918     0.054797  0.113274   0.985504
+        strikePrice_ezOct typeInd_ezOct  avgTradePrice_ezOct  avgTradePrice_esOct  ...        Vega       Theta        Rho  moneyness
+0                    1915          call                38.50          1924.750000  ...  219.781116 -193.814146  84.322011   1.005091
+1                    1775           put                29.50          1925.000000  ...  265.304020 -154.899336 -98.211918   1.084507
+2                    1300           put                 1.05          1924.737500  ...   17.230719  -29.597195  -2.497067   1.480567
+3                    2025          call                12.25          1925.250000  ...  197.562625 -112.587345  50.271795   0.950741
+4                    1450           put                 1.75          1924.500000  ...   30.536723  -42.303744  -4.798547   1.327241
+...                   ...           ...                  ...                  ...  ...         ...         ...        ...        ...
+162514               2040           put                24.50          2093.250000  ...  269.287036 -163.673642 -90.049373   1.026103
+162515               2020           put                 8.00          2094.196918  ...  128.158304 -195.454232 -21.050682   1.036731
+162516               2050           put                12.75          2094.196918  ...  164.129275 -228.562824 -32.513976   1.021559
+162517               2120          call                12.00          2094.196918  ...  177.471988 -178.721561  37.109958   0.987829
+162518               2125          call                10.00          2094.196918  ...  168.685183 -165.809959  33.108156   0.985504
 
-[162519 rows x 7 columns]
+[162519 rows x 13 columns]
 #+end_example
 
 #+begin_src python :session data_desc :cache yes
@@ -89,13 +90,37 @@ puts.drop(columns=["typeInd_ezOct"], axis=1, inplace=True)
 
 * Keras/Tensorflow
 
+#+begin_src python :session data_desc
+from sklearn.model_selection import train_test_split
+#+end_src
+
+#+RESULTS:
+
 Create a simple sequential model using Keras.
 
 #+begin_src python :session data_desc
 target_calls = calls['avgTradePrice_ezOct']
-features_calls = calls[['avgTradePrice_esOct', 'timeTillExp', 'IV', 'moneyness']]
+features_calls = calls[['avgTradePrice_esOct', 'timeTillExp', 'IV', 'moneyness', 'Delta', 'Gamma', 'Vega', 'Theta', 'Rho']]
 #+end_src
 
 #+RESULTS:
+
+#+begin_src python :session data_desc
+features_calls_train, features_calls_test, targets_calls_train, target_calls_test = train_test_split(features_calls, target_calls, test_size=0.33)
+#+end_src
+
+#+RESULTS:
+
+** Sequential Neural Network
+
+#+begin_src python :session data_desc
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+#+end_src
+
+#+RESULTS:
+
+
 
 * Pytorch
