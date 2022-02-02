@@ -88,7 +88,7 @@ puts.drop(columns=["typeInd_ezOct"], axis=1, inplace=True)
 : None
 
 
-* Keras/Tensorflow
+* Split Into Training and Test Datasets 
 
 #+begin_src python :session data_desc
 from sklearn.model_selection import train_test_split
@@ -111,12 +111,16 @@ features_calls_train, features_calls_test, targets_calls_train, target_calls_tes
 
 #+RESULTS:
 
-** Sequential Neural Network
+* Keras Sequential Neural Network
+
+#+begin_comment
+remove this section and just use pytorch???
+#+end_comment
 
 #+begin_src python :session data_desc
-import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras import layers
+# import tensorflow as tf
+# from tensorflow import keras
+# from tensorflow.keras import layers
 #+end_src
 
 #+RESULTS:
@@ -124,3 +128,13 @@ from tensorflow.keras import layers
 
 
 * Pytorch
+
+#+begin_src python :session data_desc
+import torch
+device = 'cuda'
+#+end_src
+
+
+#+begin_src python :session data_desc
+
+#+end_src
