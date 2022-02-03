@@ -134,7 +134,63 @@ import torch
 device = 'cuda'
 #+end_src
 
+#+begin_src python :session data_desc
+fct = torch.tensor(features_calls_train.values, device = device, requires_grad = True)
+tct = torch.tensor(targets_calls_train.values, device = device, requires_grad = True)
+fcg = torch.tensor(features_calls_test.values, device = device, requires_grad = True)
+tcg = torch.tensor(target_calls_test.values, device = device, requires_grad = True)
+#+end_src
+
+#+RESULTS:
+
+#+begin_src python :session data_desc :output results
+## code mainly from the Pytorch docs here:  https://pytorch.org/tutorials/beginner/examples_nn/two_layer_net_nn.html
+
+
+N, D_in, H, D_out = 30, 9, 5, 1  # batch size, dimensions in, hidden layers, dimensions out-----
+
+model = torch.nn.Sequential(
+    torch.nn.Linear(D_in, H),
+    torch.nn.ReLU(),
+    torch.nn.ReLU(),
+    torch.nn.Linear(H, D_out),
+)
+
+model = model.float()
+
+model.to(device)
+
+loss_fn = torch.nn.MSELoss(reduction='sum')
+
+learning_rate = 1e-9
+for t in range(300):
+    y_pred = model(fct.float())
+
+    loss = loss_fn(y_pred, tct.float())
+    if t % 100 == 99:
+        print(t, loss.item())
+
+    model.zero_grad()
+
+    loss.backward()
+
+    with torch.no_grad():
+        for param in model.parameters():
+            param -= learning_rate * param.grad
+#+end_src
+
+#+RESULTS:
+
 
 #+begin_src python :session data_desc
-
+model(fcg.float())
 #+end_src
+
+#+RESULTS:
+: tensor([[123.1107],
+:         [125.9512],
+:         [112.3372],
+:         ...,
+:         [121.5319],
+:         [128.9948],
+:         [124.4631]], device='cuda:0', grad_fn=<AddmmBackward0>)
