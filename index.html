@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-02-02 Wed 20:40 -->
+<!-- 2022-02-02 Wed 21:57 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Deep Neural Nets for Option Pricing</title>
@@ -207,10 +207,10 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org37721b2">1. Data</a></li>
-<li><a href="#orgb8118ee">2. Split Into Training and Test Datasets</a></li>
-<li><a href="#orgea0b75a">3. Keras Sequential Neural Network</a></li>
-<li><a href="#orgdef5959">4. Pytorch</a></li>
+<li><a href="#org94fea09">1. Data</a></li>
+<li><a href="#org144f028">2. Split Into Training and Test Datasets</a></li>
+<li><a href="#orga397862">3. Keras Sequential Neural Network</a></li>
+<li><a href="#org440a82e">4. Pytorch</a></li>
 </ul>
 </div>
 </div>
@@ -218,8 +218,8 @@
 See this paper for an early analysis which used neural nets to learn the Black-Scholes model.
 </p>
 
-<div id="outline-container-org37721b2" class="outline-2">
-<h2 id="org37721b2"><span class="section-number-2">1.</span> Data</h2>
+<div id="outline-container-org94fea09" class="outline-2">
+<h2 id="org94fea09"><span class="section-number-2">1.</span> Data</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The data we'll use is
@@ -251,7 +251,7 @@ data
 </pre>
 </div>
 
-<pre class="example" id="org64f6b59">
+<pre class="example" id="org51c29ec">
         strikePrice_ezOct typeInd_ezOct  avgTradePrice_ezOct  avgTradePrice_esOct  ...        Vega       Theta        Rho  moneyness
 0                    1915          call                38.50          1924.750000  ...  219.781116 -193.814146  84.322011   1.005091
 1                    1775           put                29.50          1925.000000  ...  265.304020 -154.899336 -98.211918   1.084507
@@ -276,7 +276,7 @@ call_plot.savefig('call_plot.png')
 </div>
 
 
-<div id="orgc65eb51" class="figure">
+<div id="orgea11d4a" class="figure">
 <p><img src="./call_plot.png" alt="call_plot.png" />
 </p>
 </div>
@@ -288,7 +288,7 @@ put_plot.savefig('put_plot.png')
 </div>
 
 
-<div id="org84ee9f5" class="figure">
+<div id="orgcb11c27" class="figure">
 <p><img src="./put_plot.png" alt="put_plot.png" />
 </p>
 </div>
@@ -308,8 +308,8 @@ puts.drop(columns=["typeInd_ezOct"], axis=1, inplace=True)
 </div>
 
 
-<div id="outline-container-orgb8118ee" class="outline-2">
-<h2 id="orgb8118ee"><span class="section-number-2">2.</span> Split Into Training and Test Datasets</h2>
+<div id="outline-container-org144f028" class="outline-2">
+<h2 id="org144f028"><span class="section-number-2">2.</span> Split Into Training and Test Datasets</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
 <pre class="src src-python">from sklearn.model_selection import train_test_split
@@ -333,8 +333,8 @@ features_calls = calls[['avgTradePrice_esOct', 'timeTillExp', 'IV', 'moneyness',
 </div>
 </div>
 
-<div id="outline-container-orgea0b75a" class="outline-2">
-<h2 id="orgea0b75a"><span class="section-number-2">3.</span> Keras Sequential Neural Network</h2>
+<div id="outline-container-orga397862" class="outline-2">
+<h2 id="orga397862"><span class="section-number-2">3.</span> Keras Sequential Neural Network</h2>
 <div class="outline-text-2" id="text-3">
 <div class="org-src-container">
 <pre class="src src-python"># import tensorflow as tf
@@ -347,8 +347,8 @@ features_calls = calls[['avgTradePrice_esOct', 'timeTillExp', 'IV', 'moneyness',
 
 
 
-<div id="outline-container-orgdef5959" class="outline-2">
-<h2 id="orgdef5959"><span class="section-number-2">4.</span> Pytorch</h2>
+<div id="outline-container-org440a82e" class="outline-2">
+<h2 id="org440a82e"><span class="section-number-2">4.</span> Pytorch</h2>
 <div class="outline-text-2" id="text-4">
 <div class="org-src-container">
 <pre class="src src-python">import torch
@@ -368,7 +368,7 @@ tcg = torch.tensor(target_calls_test.values, device = device, requires_grad = Tr
 <pre class="src src-python">## code mainly from the Pytorch docs here:  https://pytorch.org/tutorials/beginner/examples_nn/two_layer_net_nn.html
 
 
-N, D_in, H, D_out = 30, 9, 5, 1  # batch size, dimensions in, hidden layers, dimensions out-----
+N, D_in, H, D_out = 1, 9, 5, 1  # batch size, dimensions in, hidden layers, dimensions out-----
 
 model = torch.nn.Sequential(
     torch.nn.Linear(D_in, H),
@@ -383,8 +383,8 @@ model.to(device)
 
 loss_fn = torch.nn.MSELoss(reduction='sum')
 
-learning_rate = 1e-9
-for t in range(300):
+learning_rate = 1e-8
+for t in range(500):
     y_pred = model(fct.float())
 
     loss = loss_fn(y_pred, tct.float())
@@ -403,7 +403,12 @@ for t in range(300):
 
 
 <div class="org-src-container">
-<pre class="src src-python">model(fcg.float())
+<pre class="src src-python">calls_test_results = pd.Series(model(fcg.float()).detach().cpu().numpy().reshape(-1))
+actual_call_values = pd.Series(target_calls_test.values)
+
+calls_results = pd.concat([calls_test_results, actual_call_values], axis=1)
+calls_results.set_axis(["prediction", "actual_price"], axis=1, inplace=True)
+calls_results
 </pre>
 </div>
 </div>
@@ -411,7 +416,7 @@ for t in range(300):
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Matt Brigida, Ph.D.</p>
-<p class="date">Created: 2022-02-02 Wed 20:40</p>
+<p class="date">Created: 2022-02-02 Wed 21:57</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -147,7 +147,7 @@ tcg = torch.tensor(target_calls_test.values, device = device, requires_grad = Tr
 ## code mainly from the Pytorch docs here:  https://pytorch.org/tutorials/beginner/examples_nn/two_layer_net_nn.html
 
 
-N, D_in, H, D_out = 30, 9, 5, 1  # batch size, dimensions in, hidden layers, dimensions out-----
+N, D_in, H, D_out = 1, 9, 5, 1  # batch size, dimensions in, hidden layers, dimensions out-----
 
 model = torch.nn.Sequential(
     torch.nn.Linear(D_in, H),
@@ -162,8 +162,8 @@ model.to(device)
 
 loss_fn = torch.nn.MSELoss(reduction='sum')
 
-learning_rate = 1e-9
-for t in range(300):
+learning_rate = 1e-8
+for t in range(500):
     y_pred = model(fct.float())
 
     loss = loss_fn(y_pred, tct.float())
@@ -183,14 +183,30 @@ for t in range(300):
 
 
 #+begin_src python :session data_desc
-model(fcg.float())
+calls_test_results = pd.Series(model(fcg.float()).detach().cpu().numpy().reshape(-1))
+actual_call_values = pd.Series(target_calls_test.values)
+
+calls_results = pd.concat([calls_test_results, actual_call_values], axis=1)
+calls_results.set_axis(["prediction", "actual_price"], axis=1, inplace=True)
+calls_results
 #+end_src
 
 #+RESULTS:
-: tensor([[123.1107],
-:         [125.9512],
-:         [112.3372],
-:         ...,
-:         [121.5319],
-:         [128.9948],
-:         [124.4631]], device='cuda:0', grad_fn=<AddmmBackward0>)
+#+begin_example
+       prediction  actual_price
+0      357.638916          3.40
+1      373.596588         18.50
+2      379.927856          0.50
+3      379.004333          0.90
+4      358.671234         25.25
+...           ...           ...
+20829  360.411163         11.75
+20830  371.345703          8.75
+20831  373.299347          1.00
+20832  374.214203          1.70
+20833  372.616241          1.35
+
+[20834 rows x 2 columns]
+#+end_example
+
+
