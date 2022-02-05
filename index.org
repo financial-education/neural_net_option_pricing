@@ -147,7 +147,7 @@ tcg = torch.tensor(target_calls_test.values, device = device, requires_grad = Tr
 ## code mainly from the Pytorch docs here:  https://pytorch.org/tutorials/beginner/examples_nn/two_layer_net_nn.html
 
 
-N, D_in, H, D_out = 1, 9, 5, 1  # batch size, dimensions in, hidden layers, dimensions out-----
+N, D_in, H, D_out = 30, 9, 10, 1  # batch size, dimensions in, hidden layers, dimensions out-----
 
 model = torch.nn.Sequential(
     torch.nn.Linear(D_in, H),
@@ -194,17 +194,17 @@ calls_results
 #+RESULTS:
 #+begin_example
        prediction  actual_price
-0      357.638916          3.40
-1      373.596588         18.50
-2      379.927856          0.50
-3      379.004333          0.90
-4      358.671234         25.25
+0      195.931488          3.50
+1      211.511795         15.50
+2      217.717865         31.00
+3      204.282578          3.85
+4      201.135635          4.60
 ...           ...           ...
-20829  360.411163         11.75
-20830  371.345703          8.75
-20831  373.299347          1.00
-20832  374.214203          1.70
-20833  372.616241          1.35
+20829  245.698669         57.00
+20830  209.434860         14.75
+20831  207.103500         19.25
+20832  203.264603         10.25
+20833  239.195297         23.75
 
 [20834 rows x 2 columns]
 #+end_example
