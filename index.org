@@ -5,10 +5,7 @@
 
 # #+PROPERTY: header-args :eval no
 
-
-
-
-See this paper for an early analysis which used neural nets to learn the Black-Scholes model.
+[[https://www.nber.org/system/files/working_papers/w4718/w4718.pdf][See this paper]] for an early analysis which used neural nets to learn the Black-Scholes model.
 
 * Data
 

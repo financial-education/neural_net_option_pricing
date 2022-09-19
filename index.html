@@ -3,196 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-02-04 Fri 20:34 -->
+<!-- 2022-09-19 Mon 13:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Deep Neural Nets for Option Pricing</title>
 <meta name="author" content="Matt Brigida, Ph.D." />
 <meta name="generator" content="Org Mode" />
-<style>
-  #content { max-width: 60em; margin: auto; }
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #e6e6e6;
-    border-radius: 3px;
-    background-color: #f2f2f2;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: auto;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    top: -8px;
-    right: 12px;
-    padding: 3px;
-    color: #555;
-    background-color: #f2f2f299;
-  }
-  pre.src:hover:before { display: inline; margin-top: 14px;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-authinfo::before { content: 'Authinfo'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-</style>
 <link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
 <link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -207,29 +23,29 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org5499d4d">1. Data</a></li>
-<li><a href="#orgd057ed0">2. Split Into Training and Test Datasets</a></li>
-<li><a href="#org999275a">3. Keras Sequential Neural Network</a></li>
-<li><a href="#org014c980">4. Pytorch</a></li>
+<li><a href="#orgd13e08d">1. Data</a></li>
+<li><a href="#org0a0b6b9">2. Split Into Training and Test Datasets</a></li>
+<li><a href="#orgc363f81">3. Keras Sequential Neural Network</a></li>
+<li><a href="#org3e6238b">4. Pytorch</a></li>
 </ul>
 </div>
 </div>
 <p>
-See this paper for an early analysis which used neural nets to learn the Black-Scholes model.
+<a href="https://www.nber.org/system/files/working_papers/w4718/w4718.pdf">See this paper</a> for an early analysis which used neural nets to learn the Black-Scholes model.
 </p>
 
-<div id="outline-container-org5499d4d" class="outline-2">
-<h2 id="org5499d4d"><span class="section-number-2">1.</span> Data</h2>
+<div id="outline-container-orgd13e08d" class="outline-2">
+<h2 id="orgd13e08d"><span class="section-number-2">1.</span> Data</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The data we'll use is
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-data = pd.read_csv("./data_all_strikes.csv")
+<pre class="src src-python"><span style="color: #c099ff;">import</span> pandas <span style="color: #c099ff;">as</span> pd
+<span style="color: #c099ff;">import</span> seaborn <span style="color: #c099ff;">as</span> sns
+<span style="color: #c099ff;">import</span> matplotlib.pyplot <span style="color: #c099ff;">as</span> plt
+<span style="color: #ff98a4;">data</span> = pd.read_csv(<span style="color: #c3e88d;">"./data_all_strikes.csv"</span>)
 data.columns
 </pre>
 </div>
@@ -245,13 +61,13 @@ Index(['tradeDate', 'tradeTime', 'strikePrice_ezOct', 'typeInd_ezOct',
 
 
 <div class="org-src-container">
-<pre class="src src-python">data.drop(columns=["tradeDate", "tradeTime", "deliveryDate_ezOct", "deliveryDate_esOct"], axis=1, inplace=True)
-## , "BS", "Delta", "Gamma", "Vega", "Theta", "Rho"
+<pre class="src src-python">data.drop(columns=[<span style="color: #c3e88d;">"tradeDate"</span>, <span style="color: #c3e88d;">"tradeTime"</span>, <span style="color: #c3e88d;">"deliveryDate_ezOct"</span>, <span style="color: #c3e88d;">"deliveryDate_esOct"</span>], axis=1, inplace=<span style="color: #ff995e;">True</span>)
+<span style="color: #7a88cf;">## </span><span style="color: #7a88cf;">, "BS", "Delta", "Gamma", "Vega", "Theta", "Rho"</span>
 data
 </pre>
 </div>
 
-<pre class="example" id="orgd742520">
+<pre class="example" id="orga3638ed">
         strikePrice_ezOct typeInd_ezOct  avgTradePrice_ezOct  avgTradePrice_esOct  ...        Vega       Theta        Rho  moneyness
 0                    1915          call                38.50          1924.750000  ...  219.781116 -193.814146  84.322011   1.005091
 1                    1775           put                29.50          1925.000000  ...  265.304020 -154.899336 -98.211918   1.084507
@@ -269,26 +85,26 @@ data
 </pre>
 
 <div class="org-src-container">
-<pre class="src src-python">sns.color_palette("viridis", as_cmap=True)
-call_plot = sns.pairplot(data[data["typeInd_ezOct"] == "call"][["avgTradePrice_ezOct", "timeTillExp", "IV", "moneyness", "strikePrice_ezOct"]], hue="strikePrice_ezOct")
-call_plot.savefig('call_plot.png')
+<pre class="src src-python">sns.color_palette(<span style="color: #c3e88d;">"viridis"</span>, as_cmap=<span style="color: #ff995e;">True</span>)
+call_plot = sns.pairplot(data[data[<span style="color: #c3e88d;">"typeInd_ezOct"</span>] == <span style="color: #c3e88d;">"call"</span>][[<span style="color: #c3e88d;">"avgTradePrice_ezOct"</span>, <span style="color: #c3e88d;">"timeTillExp"</span>, <span style="color: #c3e88d;">"IV"</span>, <span style="color: #c3e88d;">"moneyness"</span>, <span style="color: #c3e88d;">"strikePrice_ezOct"</span>]], hue=<span style="color: #c3e88d;">"strikePrice_ezOct"</span>)
+call_plot.savefig(<span style="color: #c3e88d;">'call_plot.png'</span>)
 </pre>
 </div>
 
 
-<div id="orgc85ff71" class="figure">
+<div id="org50d1d4d" class="figure">
 <p><img src="./call_plot.png" alt="call_plot.png" />
 </p>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-python">put_plot = sns.pairplot(data[data["typeInd_ezOct"] == "put"][["avgTradePrice_ezOct", "timeTillExp", "IV", "moneyness", "strikePrice_ezOct"]], hue="strikePrice_ezOct")
-put_plot.savefig('put_plot.png')
+<pre class="src src-python"><span style="color: #ff98a4;">put_plot</span> = sns.pairplot(data[data[<span style="color: #c3e88d;">"typeInd_ezOct"</span>] == <span style="color: #c3e88d;">"put"</span>][[<span style="color: #c3e88d;">"avgTradePrice_ezOct"</span>, <span style="color: #c3e88d;">"timeTillExp"</span>, <span style="color: #c3e88d;">"IV"</span>, <span style="color: #c3e88d;">"moneyness"</span>, <span style="color: #c3e88d;">"strikePrice_ezOct"</span>]], hue=<span style="color: #c3e88d;">"strikePrice_ezOct"</span>)
+put_plot.savefig(<span style="color: #c3e88d;">'put_plot.png'</span>)
 </pre>
 </div>
 
 
-<div id="orga3ba1ca" class="figure">
+<div id="orgcaea46d" class="figure">
 <p><img src="./put_plot.png" alt="put_plot.png" />
 </p>
 </div>
@@ -298,21 +114,21 @@ Split into calls and puts.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">calls = data[data['typeInd_ezOct'] == 'call']
-calls.drop(columns=["typeInd_ezOct"], axis=1, inplace=True)
-puts = data[data['typeInd_ezOct'] == 'put']
-puts.drop(columns=["typeInd_ezOct"], axis=1, inplace=True)
+<pre class="src src-python"><span style="color: #ff98a4;">calls</span> = data[data[<span style="color: #c3e88d;">'typeInd_ezOct'</span>] == <span style="color: #c3e88d;">'call'</span>]
+calls.drop(columns=[<span style="color: #c3e88d;">"typeInd_ezOct"</span>], axis=1, inplace=<span style="color: #ff995e;">True</span>)
+puts = data[data[<span style="color: #c3e88d;">'typeInd_ezOct'</span>] == <span style="color: #c3e88d;">'put'</span>]
+puts.drop(columns=[<span style="color: #c3e88d;">"typeInd_ezOct"</span>], axis=1, inplace=<span style="color: #ff995e;">True</span>)
 </pre>
 </div>
 </div>
 </div>
 
 
-<div id="outline-container-orgd057ed0" class="outline-2">
-<h2 id="orgd057ed0"><span class="section-number-2">2.</span> Split Into Training and Test Datasets</h2>
+<div id="outline-container-org0a0b6b9" class="outline-2">
+<h2 id="org0a0b6b9"><span class="section-number-2">2.</span> Split Into Training and Test Datasets</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
-<pre class="src src-python">from sklearn.model_selection import train_test_split
+<pre class="src src-python"><span style="color: #c099ff;">from</span> sklearn.model_selection <span style="color: #c099ff;">import</span> train_test_split
 </pre>
 </div>
 
@@ -321,25 +137,25 @@ Create a simple sequential model using Keras.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">target_calls = calls['avgTradePrice_ezOct']
-features_calls = calls[['avgTradePrice_esOct', 'timeTillExp', 'IV', 'moneyness', 'Delta', 'Gamma', 'Vega', 'Theta', 'Rho']]
+<pre class="src src-python"><span style="color: #ff98a4;">target_calls</span> = calls[<span style="color: #c3e88d;">'avgTradePrice_ezOct'</span>]
+<span style="color: #ff98a4;">features_calls</span> = calls[[<span style="color: #c3e88d;">'avgTradePrice_esOct'</span>, <span style="color: #c3e88d;">'timeTillExp'</span>, <span style="color: #c3e88d;">'IV'</span>, <span style="color: #c3e88d;">'moneyness'</span>, <span style="color: #c3e88d;">'Delta'</span>, <span style="color: #c3e88d;">'Gamma'</span>, <span style="color: #c3e88d;">'Vega'</span>, <span style="color: #c3e88d;">'Theta'</span>, <span style="color: #c3e88d;">'Rho'</span>]]
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-python">features_calls_train, features_calls_test, targets_calls_train, target_calls_test = train_test_split(features_calls, target_calls, test_size=0.33)
+<pre class="src src-python"><span style="color: #ff98a4;">features_calls_train</span>, <span style="color: #ff98a4;">features_calls_test</span>, <span style="color: #ff98a4;">targets_calls_train</span>, <span style="color: #ff98a4;">target_calls_test</span> = train_test_split(features_calls, target_calls, test_size=0.33)
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org999275a" class="outline-2">
-<h2 id="org999275a"><span class="section-number-2">3.</span> Keras Sequential Neural Network</h2>
+<div id="outline-container-orgc363f81" class="outline-2">
+<h2 id="orgc363f81"><span class="section-number-2">3.</span> Keras Sequential Neural Network</h2>
 <div class="outline-text-2" id="text-3">
 <div class="org-src-container">
-<pre class="src src-python"># import tensorflow as tf
-# from tensorflow import keras
-# from tensorflow.keras import layers
+<pre class="src src-python"><span style="color: #7a88cf;"># </span><span style="color: #7a88cf;">import tensorflow as tf</span>
+<span style="color: #7a88cf;"># </span><span style="color: #7a88cf;">from tensorflow import keras</span>
+<span style="color: #7a88cf;"># </span><span style="color: #7a88cf;">from tensorflow.keras import layers</span>
 </pre>
 </div>
 </div>
@@ -347,67 +163,67 @@ features_calls = calls[['avgTradePrice_esOct', 'timeTillExp', 'IV', 'moneyness',
 
 
 
-<div id="outline-container-org014c980" class="outline-2">
-<h2 id="org014c980"><span class="section-number-2">4.</span> Pytorch</h2>
+<div id="outline-container-org3e6238b" class="outline-2">
+<h2 id="org3e6238b"><span class="section-number-2">4.</span> Pytorch</h2>
 <div class="outline-text-2" id="text-4">
 <div class="org-src-container">
-<pre class="src src-python">import torch
-device = 'cuda'
+<pre class="src src-python"><span style="color: #c099ff;">import</span> torch
+<span style="color: #ff98a4;">device</span> = <span style="color: #c3e88d;">'cuda'</span>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-python">fct = torch.tensor(features_calls_train.values, device = device, requires_grad = True)
-tct = torch.tensor(targets_calls_train.values, device = device, requires_grad = True)
-fcg = torch.tensor(features_calls_test.values, device = device, requires_grad = True)
-tcg = torch.tensor(target_calls_test.values, device = device, requires_grad = True)
+<pre class="src src-python"><span style="color: #ff98a4;">fct</span> = torch.tensor(features_calls_train.values, device = device, requires_grad = <span style="color: #ff995e;">True</span>)
+tct = torch.tensor(targets_calls_train.values, device = device, requires_grad = <span style="color: #ff995e;">True</span>)
+fcg = torch.tensor(features_calls_test.values, device = device, requires_grad = <span style="color: #ff995e;">True</span>)
+tcg = torch.tensor(target_calls_test.values, device = device, requires_grad = <span style="color: #ff995e;">True</span>)
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-python">## code mainly from the Pytorch docs here:  https://pytorch.org/tutorials/beginner/examples_nn/two_layer_net_nn.html
+<pre class="src src-python"><span style="color: #7a88cf;">## </span><span style="color: #7a88cf;">code mainly from the Pytorch docs here:  https://pytorch.org/tutorials/beginner/examples_nn/two_layer_net_nn.html</span>
 
 
-N, D_in, H, D_out = 30, 9, 10, 1  # batch size, dimensions in, hidden layers, dimensions out-----
+<span style="color: #ff98a4;">N</span>, <span style="color: #ff98a4;">D_in</span>, <span style="color: #ff98a4;">H</span>, <span style="color: #ff98a4;">D_out</span> = 30, 9, 10, 1  <span style="color: #7a88cf;"># </span><span style="color: #7a88cf;">batch size, dimensions in, hidden layers, dimensions out-----</span>
 
-model = torch.nn.Sequential(
+<span style="color: #ff98a4;">model</span> = torch.nn.Sequential(
     torch.nn.Linear(D_in, H),
     torch.nn.ReLU(),
     torch.nn.ReLU(),
     torch.nn.Linear(H, D_out),
 )
 
-model = model.float()
+<span style="color: #ff98a4;">model</span> = model.<span style="color: #c099ff;">float</span>()
 
 model.to(device)
 
-loss_fn = torch.nn.MSELoss(reduction='sum')
+<span style="color: #ff98a4;">loss_fn</span> = torch.nn.MSELoss(reduction=<span style="color: #c3e88d;">'sum'</span>)
 
 learning_rate = 1e-8
-for t in range(500):
-    y_pred = model(fct.float())
+<span style="color: #c099ff;">for</span> t <span style="color: #c099ff;">in</span> <span style="color: #c099ff;">range</span>(500):
+    y_pred = model(fct.<span style="color: #c099ff;">float</span>())
 
-    loss = loss_fn(y_pred, tct.float())
-    if t % 100 == 99:
-	print(t, loss.item())
+    loss = loss_fn(y_pred, tct.<span style="color: #c099ff;">float</span>())
+    <span style="color: #c099ff;">if</span> t % 100 == 99:
+        <span style="color: #c099ff;">print</span>(t, loss.item())
 
     model.zero_grad()
 
     loss.backward()
 
-    with torch.no_grad():
-	for param in model.parameters():
-	    param -= learning_rate * param.grad
+    <span style="color: #c099ff;">with</span> torch.no_grad():
+        <span style="color: #c099ff;">for</span> param <span style="color: #c099ff;">in</span> model.parameters():
+            param -= learning_rate * param.grad
 </pre>
 </div>
 
 
 <div class="org-src-container">
-<pre class="src src-python">calls_test_results = pd.Series(model(fcg.float()).detach().cpu().numpy().reshape(-1))
-actual_call_values = pd.Series(target_calls_test.values)
+<pre class="src src-python"><span style="color: #ff98a4;">calls_test_results</span> = pd.Series(model(fcg.<span style="color: #c099ff;">float</span>()).detach().cpu().numpy().reshape(-1))
+<span style="color: #ff98a4;">actual_call_values</span> = pd.Series(target_calls_test.values)
 
-calls_results = pd.concat([calls_test_results, actual_call_values], axis=1)
-calls_results.set_axis(["prediction", "actual_price"], axis=1, inplace=True)
+<span style="color: #ff98a4;">calls_results</span> = pd.concat([calls_test_results, actual_call_values], axis=1)
+calls_results.set_axis([<span style="color: #c3e88d;">"prediction"</span>, <span style="color: #c3e88d;">"actual_price"</span>], axis=1, inplace=<span style="color: #ff995e;">True</span>)
 calls_results
 </pre>
 </div>
@@ -416,7 +232,7 @@ calls_results
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Matt Brigida, Ph.D.</p>
-<p class="date">Created: 2022-02-04 Fri 20:34</p>
+<p class="date">Created: 2022-09-19 Mon 13:14</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
