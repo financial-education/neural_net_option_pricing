@@ -108,19 +108,8 @@ features_calls_train, features_calls_test, targets_calls_train, target_calls_tes
 
 #+RESULTS:
 
-* Keras Sequential Neural Network
+** Preprocess Data
 
-#+begin_comment
-remove this section and just use pytorch???
-#+end_comment
-
-#+begin_src python :session data_desc
-# import tensorflow as tf
-# from tensorflow import keras
-# from tensorflow.keras import layers
-#+end_src
-
-#+RESULTS:
 
 
 
@@ -207,3 +196,26 @@ calls_results
 #+end_example
 
 
+* JAX/FLAX
+
+#+begin_src python :session data_desc
+import numpy as np
+import jax
+import jax.numpy as jnp
+import flax.linen as nn
+#+end_src
+
+#+RESULTS:
+
+#+begin_src python :session data_desc
+fct_jax = jnp.array(features_calls_train.values)
+tct_jax = jnp.array(targets_calls_train.values)
+fcg_jax = jnp.array(features_calls_test.values)
+tcg_jax = jnp.array(target_calls_test.values)
+#+end_src
+
+#+RESULTS:
+
+#+begin_src python :session data_desc
+## use example from here: https://flax.readthedocs.io/en/latest/guides/flax_basics.html#linear-regression-with-flax
+#+end_src
